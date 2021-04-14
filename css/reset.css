@@ -41,3 +41,11 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+* {
+	box-sizing: border-box;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
