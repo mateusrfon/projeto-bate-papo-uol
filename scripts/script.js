@@ -46,6 +46,8 @@ function FormatMessages(messages){
             `;
         }
     }
+    const lastmsg = document.querySelector('.msg:last-child');
+    lastmsg.scrollIntoView();
 }
 
 function User() {
