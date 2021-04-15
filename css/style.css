@@ -36,9 +36,11 @@ body {
     color: #000;
     width: 42px;
     height: 31px;
+    cursor: pointer;
 }
 
 .fixed-bar input {
+    width: 80%;
     border: none;
     margin-left: 18px;
     font-size: 18px;
@@ -55,6 +57,7 @@ body {
     margin-right: 18px;
     font-size: 26px;
     color: #000;
+    cursor: pointer;
 }
 
 

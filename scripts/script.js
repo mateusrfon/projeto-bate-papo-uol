@@ -80,15 +80,29 @@ function UserAlive(){
     );
 }
 
+function Send() {
+    const input = document.querySelector('input');
+    const promessa = axios.post(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages',
+        {
+            from: user,
+            to: "Todos",
+            text: input.value,
+            type: "message" // ou "private_message" para o bônus
+        }
+    );
+    promessa.then(GetMessages);
+    promessa.catch(Reload);
+    input.value = '';
+}
+
+function Reload(){
+    window.location.reload();
+}
+
 function Users() {
 
 }
-
-function Send() {
-
-}
-
-//<ion-icon name="person-circle" class="menu-icons"></ion-icon>
 
 /*{
     from: "João",
