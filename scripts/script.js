@@ -1,4 +1,6 @@
 let user;
+let to = 'Todos';
+let messageType = 'message';
 User();
 
 function GetMessages() {
@@ -27,7 +29,7 @@ function FormatMessages(messages){
                     <span class="gray">(${messages.data[i].time}) </span>
                     <strong>${messages.data[i].from} </strong>
                     reservadamente para 
-                    <strong>Você: </strong>
+                    <strong>${user}: </strong>
                     ${messages.data[i].text}
                 </div>
                 `;
@@ -59,8 +61,10 @@ function User() {
 
 function StartChat(){
     GetMessages();
+    //GetUsers();
     setInterval(GetMessages, 3000);
     setInterval(UserAlive, 5000);
+    //setInterval(GetUsers, 10000);
 }
 function NewUser() {
     user = prompt('Este nome já está em uso, digite outro nome.');
@@ -74,40 +78,77 @@ function NewUser() {
 }
 
 function UserAlive(){
-    const promessa = axios.post(
+    axios.post(
         'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status',
         {name: user}
     );
 }
 
-function Send() {
+function SendMessage() {
     const input = document.querySelector('input');
-    const promessa = axios.post(
-        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages',
-        {
-            from: user,
-            to: "Todos",
-            text: input.value,
-            type: "message" // ou "private_message" para o bônus
-        }
-    );
-    promessa.then(GetMessages);
-    promessa.catch(Reload);
-    input.value = '';
+    if (input.value !== '') {
+        const promessa = axios.post(
+            'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages',
+            {
+                from: user,
+                to: to,  // ou usuário específico para o bônus
+                text: input.value,
+                type: messageType // ou "private_message" para o bônus
+            }
+        );
+        promessa.then(GetMessages);
+        promessa.catch(Reload);
+        input.value = '';
+    }
 }
 
 function Reload(){
     window.location.reload();
 }
 
-function Users() {
+function GetUsers() {
+    const promessa = axios.get(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants'
+    );
+    promessa.then(Users);
+}
 
+function Users(getusers) {
+                    //local do menu onde serão inseridos os usuários
+    innerHTML = ''; //limpar menu para jogar novos nomes
+    for(let i=0; i<getusers.data.length; i++){
+        getusers.data[i].name //nome do usuário
+        MessageTo(getusers.data[i].name)
+    }
+}
+
+function UserMenu() {
+    //invocar o menu
+}
+
+function CloseMenu() {
+    //colocar na div escura que fica ao lado do menu
+    //calc(100vh - MENUpx)
+}
+
+function MessageTo(who) {
+    to = who;
+    //MessageTo('Todos')
+}
+
+function MessageType(what) {
+    messageType = what;
+    //MessageType('message')
+    //MessageType('private_message')
 }
 
 /*{
-    from: "João",
-    to: "Todos",
-    text: "entra na sala...",
-    type: "status",
-    time: "08:01:17"
+[
+	{
+		name: "João"
+	},
+	{
+		name: "Maria"
+	}
+]
 }*/
