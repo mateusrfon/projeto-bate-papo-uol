@@ -23,7 +23,7 @@ function FormatMessages(messages){
             </div>
             `;
         } else if (messages.data[i].type === 'private_message') {
-            if (user === messages.data[i].to || user === messages.data[i].from) {
+            if (user === messages.data[i].to || user === messages.data[i].from || messages.data[i].to === 'Todos') {
                 chat.innerHTML +=`
                 <div class="msg private">
                     <span class="gray">(${messages.data[i].time}) </span>
@@ -104,6 +104,7 @@ function SendMessage() {
 }
 
 function Reload(){
+    alert('Desconectado, a página será recarregada.')
     window.location.reload();
 }
 
@@ -116,17 +117,30 @@ function GetUsers() {
 
 function FillUsers(getusers) {
     const users = document.querySelector('.users') //local do menu onde serão inseridos os usuários
-    users.innerHTML = ''; //limpar menu para jogar novos nomes
+    users.innerHTML = `
+        <button onclick="MessageTo('Todos')">
+            <div>
+                <ion-icon name="people" class="menu-icons"></ion-icon>
+                <span>Todos</span>
+            </div>
+            <ion-icon name="checkmark-sharp" class="check-icon uTodos"></ion-icon>
+        </button>
+    `; //limpar menu para jogar novos nomes
     for(let i=0; i<getusers.data.length; i++){
         if (user !== getusers.data[i].name){
             users.innerHTML +=`
                 <button onclick="MessageTo('${getusers.data[i].name}')">
-                    <ion-icon name="person-circle" class="menu-icons"></ion-icon>
-                    <span>${getusers.data[i].name}</span>
+                    <div>
+                        <ion-icon name="person-circle" class="menu-icons"></ion-icon>
+                        <span>${getusers.data[i].name}</span>
+                    </div>
+                    <ion-icon name="checkmark-sharp" class="check-icon u${getusers.data[i].name}"></ion-icon>
                 </button>
             `;
         }
     }
+    const check = document.querySelector(`.users .u${to}`); //quem recebera o check
+    check.classList.add('selected'); //recebimento do check
 }
 
 function ShowMenu() {
@@ -141,13 +155,19 @@ function CloseMenu() {
 
 function MessageTo(who) {
     to = who;
-    //MessageTo('Todos')
+    const uncheck = document.querySelector('.users .selected');
+    uncheck.classList.remove('selected');
+    const check = document.querySelector(`.users .u${to}`); //quem recebera o check
+    check.classList.add('selected'); //recebimento do check
+    
 }
 
 function MessageType(what) {
     messageType = what;
-    //MessageType('message')
-    //MessageType('private_message')
+    const uncheck = document.querySelector('.message-type .selected');
+    uncheck.classList.remove('selected');
+    const check = document.querySelector(`.message-type .${messageType}`); //quem recebera o check
+    check.classList.add('selected');
 }
 
 /*{

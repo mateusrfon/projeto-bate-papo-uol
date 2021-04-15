@@ -25,24 +25,28 @@
         <div class="menu-users">
             <strong>Escolha um contato<br>para enviar mensagem:</strong>
         </div>
-        <button onclick="MessageTo('Todos')">
-            <ion-icon name="people" class="menu-icons"></ion-icon>
-            <span>Todos</span>
-        </button>
         <div class="users">
 
         </div>
         <div class="menu-visibility">
             <strong>Escolha a visibilidade:</strong>
         </div>
-        <button onclick="MessageType('message')">
-            <ion-icon name="lock-open" class="menu-icons"></ion-icon>
-            <span>Público</span>
-        </button>
-        <button onclick="MessageType('private_message')">
-            <ion-icon name="lock-closed" class="menu-icons"></ion-icon>
-            <span>Reservadamente</span>
-        </button> 
+        <div class="message-type">
+            <button onclick="MessageType('message')">
+                <div>
+                    <ion-icon name="lock-open" class="menu-icons"></ion-icon>
+                    <span>Público</span>
+                </div>
+                <ion-icon name="checkmark-sharp" class="check-icon message selected"></ion-icon>
+            </button>
+            <button onclick="MessageType('private_message')">
+                <div>
+                    <ion-icon name="lock-closed" class="menu-icons"></ion-icon>
+                    <span>Reservadamente</span>
+                </div>
+                <ion-icon name="checkmark-sharp" class="check-icon private_message"></ion-icon>
+            </button> 
+        </div>
         <div class="empty" onclick="CloseMenu()"></div>
     </div>
     <!--Menu-->
