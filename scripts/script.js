@@ -1,5 +1,6 @@
 let user;
 let to = 'Todos';
+let userIndex = 'a';
 let messageType = 'message';
 User();
 
@@ -87,6 +88,12 @@ function UserAlive(){
     );
 }
 
+function EnterPressed(event) {
+    if (event.keyCode == 13) {
+        SendMessage();
+    }
+}
+
 function SendMessage() {
     const input = document.querySelector('input');
     if (input.value !== '') {
@@ -120,28 +127,28 @@ function GetUsers() {
 function FillUsers(getusers) {
     const users = document.querySelector('.users') //local do menu onde serão inseridos os usuários
     users.innerHTML = `
-        <button onclick="MessageTo('Todos')">
+        <button onclick="MessageTo('Todos', 'a')">
             <div>
                 <ion-icon name="people" class="menu-icons"></ion-icon>
                 <span>Todos</span>
             </div>
-            <ion-icon name="checkmark-sharp" class="check-icon uTodos"></ion-icon>
+            <ion-icon name="checkmark-sharp" class="check-icon ua"></ion-icon>
         </button>
     `; //limpar menu para jogar novos nomes
     for(let i=0; i<getusers.data.length; i++){
         if (user !== getusers.data[i].name){
             users.innerHTML +=`
-                <button onclick="MessageTo('${getusers.data[i].name}')">
+                <button onclick="MessageTo('${getusers.data[i].name}', '${i}')">
                     <div>
                         <ion-icon name="person-circle" class="menu-icons"></ion-icon>
                         <span>${getusers.data[i].name}</span>
                     </div>
-                    <ion-icon name="checkmark-sharp" class="check-icon u${getusers.data[i].name}"></ion-icon>
+                    <ion-icon name="checkmark-sharp" class="check-icon u${i}"></ion-icon>
                 </button>
             `;
         }
     }
-    const check = document.querySelector(`.users .u${to}`); //quem recebera o check
+    const check = document.querySelector(`.users .u${userIndex}`); //quem recebera o check
     check.classList.add('selected'); //recebimento do check
 }
 
@@ -155,14 +162,15 @@ function CloseMenu() {
     menu.classList.add('hidden')
 }
 
-function MessageTo(who) {
+function MessageTo(who,i) {
     to = who;
+    userIndex = `${i}`;
     const uncheck = document.querySelector('.users .selected');
     uncheck.classList.remove('selected');
-    const check = document.querySelector(`.users .u${to}`); //quem recebera o check
+    const check = document.querySelector(`.users .u${i}`); //quem recebera o check
     check.classList.add('selected'); //recebimento do check
     
-    MessageToHow();
+    MessageToType();
 }
 
 function MessageType(what) {
@@ -173,10 +181,10 @@ function MessageType(what) {
     const check = document.querySelector(`.message-type .${messageType}`); //quem recebera o check
     check.classList.add('selected');
 
-    MessageToHow();
+    MessageToType();
 }
 
-function MessageToHow() {
+function MessageToType() {
     const writing = document.querySelector('.writing-to-how');
     writing.innerHTML = '';
     if (messageType === 'message') {

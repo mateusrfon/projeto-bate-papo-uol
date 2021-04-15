@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"> 
-        
+
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -60,7 +60,7 @@
     <!--Bottom-Bar-->
     <div class="fixed-bar bottom">
         <div class="write-box">
-            <input type="text" placeholder="Escreva aqui...">
+            <input type="text" placeholder="Escreva aqui..." onkeydown="EnterPressed(event)">
             <div class="writing-to-how">Enviando para Todos (publicamente)</div>
         </div>
         <ion-icon name="paper-plane-outline" class="send-icon" onclick="SendMessage()"></ion-icon>
