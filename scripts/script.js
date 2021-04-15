@@ -1,5 +1,5 @@
-const user = User();
-setInterval(GetMessages, 3000);
+let user;
+User();
 
 function GetMessages() {
     const promessa = axios.get(
@@ -47,8 +47,37 @@ function FormatMessages(messages){
 }
 
 function User() {
-    const user = prompt('Qual o seu nome?');
-    return user;
+    user = prompt('Qual o seu nome?');
+    const promessa = axios.post(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants',
+        {name: user}
+    );
+    
+    promessa.then(StartChat);
+    promessa.catch(NewUser);
+}
+
+function StartChat(){
+    GetMessages();
+    setInterval(GetMessages, 3000);
+    setInterval(UserAlive, 5000);
+}
+function NewUser() {
+    user = prompt('Este nome já está em uso, digite outro nome.');
+    const promessa = axios.post(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants',
+        {name: user}
+    );
+    
+    promessa.then(StartChat);
+    promessa.catch(NewUser);
+}
+
+function UserAlive(){
+    const promessa = axios.post(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status',
+        {name: user}
+    );
 }
 
 function Users() {
