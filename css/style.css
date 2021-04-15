@@ -42,9 +42,9 @@ body {
 .fixed-bar input {
     width: 80%;
     border: none;
-    margin-left: 18px;
     font-size: 18px;
     color: black;
+    margin-bottom: 10px;
 }
 
 .fixed-bar input::placeholder {
@@ -60,6 +60,17 @@ body {
     cursor: pointer;
 }
 
+.write-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 18px;
+}
+
+.writing-to-how {
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.5;
+}
 
 /* Chat */
 .chat {

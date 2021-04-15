@@ -160,14 +160,28 @@ function MessageTo(who) {
     const check = document.querySelector(`.users .u${to}`); //quem recebera o check
     check.classList.add('selected'); //recebimento do check
     
+    MessageToHow();
 }
 
 function MessageType(what) {
     messageType = what;
+
     const uncheck = document.querySelector('.message-type .selected');
     uncheck.classList.remove('selected');
     const check = document.querySelector(`.message-type .${messageType}`); //quem recebera o check
     check.classList.add('selected');
+
+    MessageToHow();
+}
+
+function MessageToHow() {
+    const writing = document.querySelector('.writing-to-how');
+    writing.innerHTML = '';
+    if (messageType === 'message') {
+        writing.innerHTML = `Enviando para ${to} (publicamente)`;
+    } else {
+        writing.innerHTML = `Enviando para ${to} (reservadamente)`;
+    } 
 }
 
 /*{
