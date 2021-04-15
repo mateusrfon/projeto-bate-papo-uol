@@ -71,12 +71,23 @@ body {
     font-size: 14px;
     background-color: #fff;
     color: black;
+    margin-bottom: 4px;
 }
 
-.msg.system {
+.msg.status {
     background-color: #e5e5e5;
 }
 
 .msg.private {
     background-color: #ffdede;
+}
+
+.gray {
+    color: #aaa;
+}
+
+/* Menu */
+.menu-icons {
+    font-size: 20px;
+    color: black;
 }
