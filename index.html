@@ -16,15 +16,36 @@
     <!--Top-Bar-->
     <div class="fixed-bar top">
         <img src="images/logo1.png" alt="logo" class="logo-img">
-        <ion-icon name="people" class="users-icon" onclick="UsersMenu()"></ion-icon>
+        <ion-icon name="people" class="users-icon" onclick="ShowMenu()"></ion-icon>
     </div>
     <!--Top-Bar-->
 
-    <!--Menu
-    <ion-icon name="people" class="menu-icons"></ion-icon>
-    <ion-icon name="lock-open" class="menu-icons"></ion-icon>
-    <ion-icon name="lock-closed" class="menu-icons"></ion-icon>
-    Menu-->
+    <!--Menu-->
+    <div class="menu hidden">
+        <div class="menu-users">
+            <strong>Escolha um contato<br>para enviar mensagem:</strong>
+        </div>
+        <button onclick="MessageTo('Todos')">
+            <ion-icon name="people" class="menu-icons"></ion-icon>
+            <span>Todos</span>
+        </button>
+        <div class="users">
+
+        </div>
+        <div class="menu-visibility">
+            <strong>Escolha a visibilidade:</strong>
+        </div>
+        <button onclick="MessageType('message')">
+            <ion-icon name="lock-open" class="menu-icons"></ion-icon>
+            <span>Público</span>
+        </button>
+        <button onclick="MessageType('private_message')">
+            <ion-icon name="lock-closed" class="menu-icons"></ion-icon>
+            <span>Reservadamente</span>
+        </button> 
+        <div class="empty" onclick="CloseMenu()"></div>
+    </div>
+    <!--Menu-->
 
     <!--Chat-->
     <div class="chat">

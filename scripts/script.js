@@ -23,13 +23,13 @@ function FormatMessages(messages){
             </div>
             `;
         } else if (messages.data[i].type === 'private_message') {
-            if (user === messages.data[i].to) {
+            if (user === messages.data[i].to || user === messages.data[i].from) {
                 chat.innerHTML +=`
                 <div class="msg private">
                     <span class="gray">(${messages.data[i].time}) </span>
                     <strong>${messages.data[i].from} </strong>
                     reservadamente para 
-                    <strong>${user}: </strong>
+                    <strong>${messages.data[i].to}: </strong>
                     ${messages.data[i].text}
                 </div>
                 `;
@@ -61,11 +61,12 @@ function User() {
 
 function StartChat(){
     GetMessages();
-    //GetUsers();
+    GetUsers();
     setInterval(GetMessages, 3000);
     setInterval(UserAlive, 5000);
-    //setInterval(GetUsers, 10000);
+    setInterval(GetUsers, 10000);
 }
+
 function NewUser() {
     user = prompt('Este nome já está em uso, digite outro nome.');
     const promessa = axios.post(
@@ -110,25 +111,32 @@ function GetUsers() {
     const promessa = axios.get(
         'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants'
     );
-    promessa.then(Users);
+    promessa.then(FillUsers);
 }
 
-function Users(getusers) {
-                    //local do menu onde serão inseridos os usuários
-    innerHTML = ''; //limpar menu para jogar novos nomes
+function FillUsers(getusers) {
+    const users = document.querySelector('.users') //local do menu onde serão inseridos os usuários
+    users.innerHTML = ''; //limpar menu para jogar novos nomes
     for(let i=0; i<getusers.data.length; i++){
-        getusers.data[i].name //nome do usuário
-        MessageTo(getusers.data[i].name)
+        if (user !== getusers.data[i].name){
+            users.innerHTML +=`
+                <button onclick="MessageTo('${getusers.data[i].name}')">
+                    <ion-icon name="person-circle" class="menu-icons"></ion-icon>
+                    <span>${getusers.data[i].name}</span>
+                </button>
+            `;
+        }
     }
 }
 
-function UserMenu() {
-    //invocar o menu
+function ShowMenu() {
+    const menu = document.querySelector('.menu');
+    menu.classList.remove('hidden')
 }
 
 function CloseMenu() {
-    //colocar na div escura que fica ao lado do menu
-    //calc(100vh - MENUpx)
+    const menu = document.querySelector('.menu');
+    menu.classList.add('hidden')
 }
 
 function MessageTo(who) {
