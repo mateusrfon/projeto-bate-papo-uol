@@ -163,7 +163,7 @@ function CloseMenu() {
 function MessageTo(who) {
     const users = document.querySelector('.users');
     to = who;
-    for (let i=1; i<=usersLength; i++) { //+2 pois tem a div Todos
+    for (let i=1; i<=usersLength; i++) { //+1 pois tem a div Todos???? Ahhhhhh, mas tem eu que não aparece, por isso não precisa kkkkkk
         const button = users.querySelector(`button:nth-of-type(${i})`);
         const span = button.querySelector('span');
         if (span.innerHTML === to) {
