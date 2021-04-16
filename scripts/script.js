@@ -1,6 +1,6 @@
 let user;
 let to = 'Todos';
-let userIndex = 'a';
+let usersLength = 0;
 let messageType = 'message';
 
 function GetMessages() {
@@ -125,29 +125,29 @@ function GetUsers() {
 function FillUsers(getusers) {
     const users = document.querySelector('.users') //local do menu onde serão inseridos os usuários
     users.innerHTML = `
-        <button onclick="MessageTo('Todos', 'a')">
+        <button onclick="MessageTo('Todos')">
             <div>
                 <ion-icon name="people" class="menu-icons"></ion-icon>
                 <span>Todos</span>
             </div>
-            <ion-icon name="checkmark-sharp" class="check-icon ua"></ion-icon>
+            <ion-icon name="checkmark-sharp" class="check-icon selected"></ion-icon>
         </button>
     `; //limpar menu para jogar novos nomes
+    usersLength = getusers.data.length;
     for(let i=0; i<getusers.data.length; i++){
         if (user !== getusers.data[i].name){
             users.innerHTML +=`
-                <button onclick="MessageTo('${getusers.data[i].name}', '${i}')">
+                <button onclick="MessageTo('${getusers.data[i].name}')">
                     <div>
                         <ion-icon name="person-circle" class="menu-icons"></ion-icon>
                         <span>${getusers.data[i].name}</span>
                     </div>
-                    <ion-icon name="checkmark-sharp" class="check-icon u${i}"></ion-icon>
+                    <ion-icon name="checkmark-sharp" class="check-icon"></ion-icon>
                 </button>
             `;
         }
     }
-    const check = document.querySelector(`.users .u${userIndex}`); //quem recebera o check
-    check.classList.add('selected'); //recebimento do check
+    MessageTo(to);
 }
 
 function ShowMenu() {
@@ -160,14 +160,19 @@ function CloseMenu() {
     menu.classList.add('hidden')
 }
 
-function MessageTo(who,i) {
+function MessageTo(who) {
+    const users = document.querySelector('.users');
     to = who;
-    userIndex = `${i}`;
-    const uncheck = document.querySelector('.users .selected');
-    uncheck.classList.remove('selected');
-    const check = document.querySelector(`.users .u${i}`); //quem recebera o check
-    check.classList.add('selected'); //recebimento do check
-    
+    for (let i=1; i<=usersLength; i++) { //+2 pois tem a div Todos
+        const button = users.querySelector(`button:nth-of-type(${i})`);
+        const span = button.querySelector('span');
+        if (span.innerHTML === to) {
+            const uncheck = document.querySelector('.users .selected');
+            uncheck.classList.remove('selected');
+            const check = button.querySelector('.check-icon'); //quem recebera o check
+            check.classList.add('selected'); //recebimento do check
+        }
+    }
     MessageToType();
 }
 
