@@ -2,7 +2,6 @@ let user;
 let to = 'Todos';
 let userIndex = 'a';
 let messageType = 'message';
-User();
 
 function GetMessages() {
     const promessa = axios.get(
@@ -52,17 +51,23 @@ function FormatMessages(messages){
 }
 
 function User() {
-    user = prompt('Qual o seu nome?');
-    const promessa = axios.post(
-        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants',
-        {name: user}
-    );
-    
-    promessa.then(StartChat);
-    promessa.catch(NewUser);
+    const input = document.querySelector('.login input');
+    //user = prompt('Qual o seu nome?');
+    if (input.value !== '') {
+        user = input.value;
+        const promessa = axios.post(
+            'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants',
+            {name: user}
+        );
+        
+        promessa.then(StartChat);
+        promessa.catch(NewUser);
+    }
 }
 
 function StartChat(){
+    const login = document.querySelector('.login');
+    login.classList.add('hidden');
     GetMessages();
     GetUsers();
     setInterval(GetMessages, 3000);
@@ -71,14 +76,7 @@ function StartChat(){
 }
 
 function NewUser() {
-    user = prompt('Este nome já está em uso, digite outro nome.');
-    const promessa = axios.post(
-        'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants',
-        {name: user}
-    );
-    
-    promessa.then(StartChat);
-    promessa.catch(NewUser);
+    alert('Este nome já está em uso, digite outro nome.');
 }
 
 function UserAlive(){
@@ -95,7 +93,7 @@ function EnterPressed(event) {
 }
 
 function SendMessage() {
-    const input = document.querySelector('input');
+    const input = document.querySelector('.bottom input');
     if (input.value !== '') {
         const promessa = axios.post(
             'https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages',
